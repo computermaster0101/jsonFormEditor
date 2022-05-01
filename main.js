@@ -28,7 +28,7 @@ const mainMenuTempate = [
 	submenu: [
 	  {
 	    label: 'Open Directory',
-		accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
+	    accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
 		click(){
 			app.quit()
 		}
