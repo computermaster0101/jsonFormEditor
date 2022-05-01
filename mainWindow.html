@@ -2,10 +2,21 @@
 <html lang="en">
 <head>
   <title>JSON Form Viewer</title>
+  <script>
+    const electron = required('electron')
+	const {ipcRenderer} = electron
+	
+    window.onload = function(){
+	  ipcRenderer.send('fullyLoaded')
+    }
+	
+  </script>
 </head>
 <body>
   <h1>JSON Form Viewer</h1>
   <div align="left">This is where files should be</div>
   <div align="right">This is where forms should be dislayed</div>
+
+
 </body>
 </html>
