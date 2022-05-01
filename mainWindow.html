@@ -11,9 +11,7 @@
 
   <script>
 	const { ipcRenderer } = require('electron');	
-	const { dialog } = require('electron');	
 	function fullyLoaded(){
-      console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 	  ipcRenderer.send("hit")
     }
 	

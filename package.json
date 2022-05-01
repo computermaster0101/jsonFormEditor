@@ -4,7 +4,7 @@
   "description": "Used to view and edit json files as forms",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron main.js"
   },
   "author": "Michael Herber II",
   "license": "MIT",

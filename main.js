@@ -4,7 +4,7 @@ const path = require('path')
 
 process.env.NODE_ENV = 'development'
 
-const {app, BrowserWindow, Menu, ipcMain} = electron
+const {app, BrowserWindow, Menu, ipcMain, dialog} = electron
 let mainWindow
  
 // listen for the app to be ready
@@ -30,7 +30,7 @@ app.on('ready', function(){
 
 ipcMain.on('hit', function(e, dir){
   console.log("hit!")
-  console.log(dir)
+  console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 });
 
 const mainMenuTemplate = [
