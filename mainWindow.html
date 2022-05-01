@@ -10,10 +10,11 @@
   <div align="right">This is where forms should be dislayed</div>
 
   <script>
-	const electron = require('electron');
-    const {ipcRenderer} = electron;	
+	const { ipcRenderer } = require('electron');	
+	const { dialog } = require('electron');	
 	function fullyLoaded(){
-	  ipcRenderer.send('hit')
+      console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+	  ipcRenderer.send("hit")
     }
 	
   </script>

@@ -28,9 +28,9 @@ app.on('ready', function(){
   Menu.setApplicationMenu(mainMenu)
 })
 
-ipcMain.on('hit', function(e){
-  addWindow.close(); 
+ipcMain.on('hit', function(e, dir){
   console.log("hit!")
+  console.log(dir)
 });
 
 const mainMenuTemplate = [
