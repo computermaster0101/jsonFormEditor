@@ -1,0 +1,14 @@
+{
+  "name": "electron-jsonformeditor",
+  "version": "1.0.0",
+  "description": "Used to view and edit json files as forms",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Michael Herber II",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^18.2.0"
+  }
+}
