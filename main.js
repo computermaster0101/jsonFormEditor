@@ -39,15 +39,13 @@ function openDialog(){
 }
 
 function expandFolder(folder){
-	console.log(`folder to load is ${folder}`)
-	folderContent=fs.readdirSync(`${folder}`)
-	console.log(folderContent)
-
-	folderContent.forEach((item) => {
+	fs.readdirSync(`${folder}`).forEach((item) => {
 		item = path.join(`${folder}`,item)
 		stat=fs.statSync(item)
-		if (stat.isFile() && (item.substr(-5) == ".json")){
-			console.log(`${item} is a json file`)
+		if (stat.isFile()){
+			if (item.substr(-5) == ".json"){
+				console.log(`${item} is a json file`)
+			}
 		} else if (stat.isDirectory){
 			console.log(`${item} is a directory`)
 			expandFolder(item)
