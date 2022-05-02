@@ -24,6 +24,7 @@
 	  const li = document.createElement('li')
 	  const itemText = document.createTextNode(item)
 	  li.appendChild(itemText)
+	  li.addEventListener("click",displayItem)
 	  ul.appendChild(li)
 	})
 	
