@@ -33,27 +33,41 @@ ipcMain.on('loadFolder', function(e){
   folderToLoad=(dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }))
   if ( typeof(folderToLoad) !== 'undefined' && folderToLoad ){
 	console.log(`folder to load is ${folderToLoad}`)
+	folderContent=fs.readdirSync(`${folderToLoad}`)
+	console.log(folderContent)
+	folderContent.forEach((item) => {
+		item = path.join(`${folderToLoad}`,item)
+		console.log(item)
+		stat=fs.statSync(item)
+		console.log(stat)
+		console.log("Path is file:", stat.isFile());
+		console.log("Path is directory:", stat.isDirectory());
+
+	})
+/*
 	fs.readdir(`${folderToLoad}`,(err,folderContent) => {
 		console.log(folderContent)
 		for ( item in folderContent){
-			console.log(item)
-			fs.stat(`${item}`, (err, stat) => {
+			item = `${folderToLoad}\${folderContent[item]}`
+			console.log(folderContent[item])
+			fs.stat(`${folderContent[item]}`, (err, stat) => {
 				if (err) {
 					console.error("Error stating file.", err)
 				}
 				
 				if (stat.isDirectory()) {
-					console.log(`${item} is a directory`)
+					console.log(`${folderContent[item]} is a directory`)
 				} else if (stat.isFile()) {
-					if ( item.substr(-5) == ".json" ) {
-						console.log(`found json file ${item}`)
+					if ( folderContent[item].substr(-5) == ".json" ) {
+						console.log(`found json file ${folderContent[item]}`)
 					} else {
-						console.log(`not a json file ${item}`)
+						console.log(`not a json file ${folderContent[item]}`)
 					}
 				}
 			})
 		}
 	})
+*/
   } else {
 	console.log(`folder to load is ${typeof(folderToLoad)}`)
   }
