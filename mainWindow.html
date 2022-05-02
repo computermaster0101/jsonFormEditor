@@ -4,7 +4,7 @@
   <title>JSON Form Viewer</title>
   
 </head>
-<body onload="loadFolder();" onclick="loadFolder();">
+<body onload="loadFolder();">
   <h1>JSON Form Viewer</h1>
   <div align="left" id="list">
 	<ul></ul>
@@ -14,6 +14,8 @@
   <script>
 	const { ipcRenderer } = require('electron');	
 	const ul = document.querySelector('ul')
+	var listItemCounter = 0
+	
 	function loadFolder(){
 	  ipcRenderer.send("loadFolder")
     }
@@ -28,6 +30,11 @@
 	ipcRenderer.on('clearItems',(err) => {
 	  ul.innerHTML = ""
 	})
+		
+	function displayItem(event){
+	  event.target.remove()
+	  ipcRenderer.send("displayItem",event.target.innerHTML)
+	}
   </script>
 </body>
 </html>

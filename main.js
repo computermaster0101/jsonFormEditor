@@ -26,6 +26,7 @@ app.on('ready', function(){
 })
 
 ipcMain.on('loadFolder', () => { openDialog() })
+ipcMain.on('displayItem', (event) => { console.log(event) })
 
 function openDialog(){
 	console.log("loadFolder hit!")
@@ -50,7 +51,7 @@ function expandFolder(folder){
 					mainWindow.webContents.send('addItem',folder)
 				}
 				console.log(`${item} is a json file`)
-				mainWindow.webContents.send('addItem',item);
+				mainWindow.webContents.send('addItem',path.join(`${folder}`,item))
 			}
 		} else if (stat.isDirectory){
 			console.log(`${item} is a directory`)
