@@ -4,15 +4,15 @@
   <title>JSON Form Viewer</title>
   
 </head>
-<body onclick="fullyLoaded();">
+<body onclick="loadFolder();">
   <h1>JSON Form Viewer</h1>
   <div align="left">This is where files should be</div>
   <div align="right">This is where forms should be dislayed</div>
 
   <script>
 	const { ipcRenderer } = require('electron');	
-	function fullyLoaded(){
-	  ipcRenderer.send("hit")
+	function loadFolder(){
+	  ipcRenderer.send("loadFolder")
     }
 	
   </script>

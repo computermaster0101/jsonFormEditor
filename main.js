@@ -1,7 +1,7 @@
 const electron = require('electron')
 const url = require('url')
 const path = require('path')
-
+const fs = require('fs')
 process.env.NODE_ENV = 'development'
 
 const {app, BrowserWindow, Menu, ipcMain, dialog} = electron
@@ -28,9 +28,35 @@ app.on('ready', function(){
   Menu.setApplicationMenu(mainMenu)
 })
 
-ipcMain.on('hit', function(e, dir){
-  console.log("hit!")
-  console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+ipcMain.on('loadFolder', function(e){
+  console.log("loadFolder hit!")
+  folderToLoad=(dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }))
+  if ( typeof(folderToLoad) !== 'undefined' && folderToLoad ){
+	console.log(`folder to load is ${folderToLoad}`)
+	fs.readdir(`${folderToLoad}`,(err,folderContent) => {
+		console.log(folderContent)
+		for ( item in folderContent){
+			console.log(item)
+			fs.stat(`${item}`, (err, stat) => {
+				if (err) {
+					console.error("Error stating file.", err)
+				}
+				
+				if (stat.isDirectory()) {
+					console.log(`${item} is a directory`)
+				} else if (stat.isFile()) {
+					if ( item.substr(-5) == ".json" ) {
+						console.log(`found json file ${item}`)
+					} else {
+						console.log(`not a json file ${item}`)
+					}
+				}
+			})
+		}
+	})
+  } else {
+	console.log(`folder to load is ${typeof(folderToLoad)}`)
+  }
 });
 
 const mainMenuTemplate = [
