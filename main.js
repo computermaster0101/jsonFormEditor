@@ -29,6 +29,7 @@ ipcMain.on('loadFolder', () => { openDialog() })
 
 function openDialog(){
 	console.log("loadFolder hit!")
+	mainWindow.webContents.send('clearItems')
 	folderToLoad=(dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }))
 
 	if ( typeof(folderToLoad) !== 'undefined' && folderToLoad ){
@@ -39,16 +40,17 @@ function openDialog(){
 }
 
 function expandFolder(folder){
+	//mainWindow.webContents.send('addItem',folder)
 	fs.readdirSync(`${folder}`).forEach((item) => {
-		item = path.join(`${folder}`,item)
-		stat=fs.statSync(item)
+		stat=fs.statSync(path.join(`${folder}`,item))
 		if (stat.isFile()){
 			if (item.substr(-5) == ".json"){
 				console.log(`${item} is a json file`)
+				mainWindow.webContents.send('addItem',item);
 			}
 		} else if (stat.isDirectory){
 			console.log(`${item} is a directory`)
-			expandFolder(item)
+			expandFolder(path.join(`${folder}`,item))
 		}
 	})
 }

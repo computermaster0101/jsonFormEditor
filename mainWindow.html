@@ -6,15 +6,28 @@
 </head>
 <body onload="loadFolder();" onclick="loadFolder();">
   <h1>JSON Form Viewer</h1>
-  <div align="left">This is where files should be</div>
+  <div align="left" id="list">
+	<ul></ul>
+  </div>
   <div align="right">This is where forms should be dislayed</div>
   <div align="center">This is where a simple search will be</div>
   <script>
 	const { ipcRenderer } = require('electron');	
+	const ul = document.querySelector('ul')
 	function loadFolder(){
 	  ipcRenderer.send("loadFolder")
     }
 	
+	ipcRenderer.on('addItem',(err, item) => {
+	  const li = document.createElement('li')
+	  const itemText = document.createTextNode(item)
+	  li.appendChild(itemText)
+	  ul.appendChild(li)
+	})
+	
+	ipcRenderer.on('clearItems',(err) => {
+	  ul.innerHTML = ""
+	})
   </script>
 </body>
 </html>
