@@ -40,11 +40,15 @@ function openDialog(){
 }
 
 function expandFolder(folder){
-	//mainWindow.webContents.send('addItem',folder)
+	noFiles=true
 	fs.readdirSync(`${folder}`).forEach((item) => {
 		stat=fs.statSync(path.join(`${folder}`,item))
 		if (stat.isFile()){
 			if (item.substr(-5) == ".json"){
+				if (noFiles){
+					noFiles=false
+					mainWindow.webContents.send('addItem',folder)
+				}
 				console.log(`${item} is a json file`)
 				mainWindow.webContents.send('addItem',item);
 			}
