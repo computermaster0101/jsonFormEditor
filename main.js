@@ -53,6 +53,7 @@ app.on('ready', function(){
 
 ipcMain.on('loadFolder', () => { openDialog() })
 ipcMain.on('displayItem', (event) => { console.log(event) })
+ipcMain.on('hit', (event,myString) => { console.log(myString) })
 
 function openDialog(){
 	console.log("loadFolder hit!")
