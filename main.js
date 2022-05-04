@@ -7,6 +7,28 @@ const fs = require('fs')
 const {app, BrowserWindow, Menu, ipcMain, dialog} = electron
 
 let mainWindow
+
+const mainMenuTemplate = [
+	{
+		label: 'File',
+		submenu: [
+			{
+				label: 'Open Directory',
+				accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
+				click(){
+					openDialog()
+				}
+			},
+			{
+				label: 'Quit',
+				accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+				click(){
+					app.quit()
+				}
+			}
+		]
+	}
+]
  
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({})
@@ -60,27 +82,7 @@ function expandFolder(folder){
 	})
 }
 
-const mainMenuTemplate = [
-	{
-		label: 'File',
-		submenu: [
-			{
-				label: 'Open Directory',
-				accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
-				click(){
-					openDialog()
-				}
-			},
-			{
-				label: 'Quit',
-				accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-				click(){
-					app.quit()
-				}
-			}
-		]
-	}
-]
+
 
 // If OSX, add empty object to menu
 if(process.platform == 'darwin'){
