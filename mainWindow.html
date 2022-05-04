@@ -12,30 +12,17 @@
   <div align="right">This is where forms should be dislayed</div>
   <div align="center">This is where a simple search will be</div>
   <script>
-	const { ipcRenderer } = require('electron');	
 	const ul = document.querySelector('ul')
 	var listItemCounter = 0
 	
 	function loadFolder(){
-	  ipcRenderer.send("loadFolder")
+	  window.electron.loadFolder()
     }
-	
-	ipcRenderer.on('addItem',(err, item) => {
-	  const li = document.createElement('li')
-	  const itemText = document.createTextNode(item)
-	  li.appendChild(itemText)
-	  li.addEventListener("click",displayItem)
-	  ul.appendChild(li)
-	})
-	
-	ipcRenderer.on('clearItems',(err) => {
-	  ul.innerHTML = ""
-	})
 		
 	function displayItem(event){
 	  event.target.remove()
-	  ipcRenderer.send("displayItem",event.target.innerHTML)
 	}
+	
   </script>
 </body>
 </html>

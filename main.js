@@ -31,7 +31,11 @@ const mainMenuTemplate = [
 ]
  
 app.on('ready', function(){
-	mainWindow = new BrowserWindow({})
+	mainWindow = new BrowserWindow({
+		webPreferences: {
+			preload: path.join(app.getAppPath(), 'preload.js')
+		}
+	})
 	
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'mainWindow.html'),
@@ -53,7 +57,7 @@ ipcMain.on('displayItem', (event) => { console.log(event) })
 function openDialog(){
 	console.log("loadFolder hit!")
 	mainWindow.webContents.send('clearItems')
-	folderToLoad=(dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }))
+	folderToLoad=(dialog.showOpenDialogSync(mainWindow, { properties: ['openDirectory'] }))
 
 	if ( typeof(folderToLoad) !== 'undefined' && folderToLoad ){
 		expandFolder(folderToLoad)
