@@ -34,20 +34,30 @@ ipcRenderer.on('addItem',(err, item) => {
 
 ipcRenderer.on('isJSON',(err, file, content) => {
 	console.log(`${file}:${JSON.stringify(content)}`)
+	
 	const br = document.createElement("br")
 	const form = document.querySelector('form')
 	const fileName = document.createElement('input')
 	fileName.setAttribute("type", "text")
 	fileName.setAttribute("name", "File Name: ")
 	fileName.setAttribute("placeholder", file)
-
-	const fileData = document.createElement('input')
-	fileData.setAttribute("type", "text")
-	fileData.setAttribute("name", "File Data: ")
-	fileData.setAttribute("placeholder", JSON.stringify(content))
 	form.appendChild(fileName)
 	form.appendChild(br.cloneNode())
-	form.appendChild(fileData)
+	
+	for (item in content){
+		console.log(item, content[item], typeof(content[item]))
+		newFormItem = document.createElement('input')
+		newFormItem.setAttribute("type", "text")
+		newFormItem.setAttribute("name", "File Name: ")
+		newFormItem.setAttribute("placeholder", content[item])
+		newFormItemLabel = document.createElement('label')
+		newFormItemLabel.innerHTML = item
+		newFormItemLabel.setAttribute("for", item)
+		form.appendChild(br.cloneNode())
+		form.appendChild(newFormItemLabel)
+		form.appendChild(newFormItem)
+	}
+
 })
 
 ipcRenderer.on('notJSON',(err, file, error) => {
