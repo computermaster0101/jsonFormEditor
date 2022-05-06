@@ -17,7 +17,7 @@
 		"nestThree": {
 			"n1": true,
 			"n2": false
-		},
+		}
+	},
 	"array": ["this", "is", "a", "test", "array"]
-	}
 }

@@ -32,8 +32,8 @@ ipcRenderer.on('addItem',(err, folder, file) => {
 	const ul = document.querySelector('ul')
 	const li = document.createElement('li')
 	
-	console.log("folder: " + folder)
-	console.log("file: " + file)
+	//console.log("folder: " + folder)
+	//console.log("file: " + file)
 	
 	li.appendChild(document.createTextNode(file))
 	if (folder == file) {
@@ -47,7 +47,7 @@ ipcRenderer.on('addItem',(err, folder, file) => {
 })
 
 ipcRenderer.on('isJSON',(err, file, content) => {
-	console.log(`${file}:${JSON.stringify(content)}`)
+	//console.log(`${file}:${JSON.stringify(content)}`)
 	
 	const br = document.createElement("br")
 	const form = document.querySelector('form')
@@ -64,7 +64,7 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 	form.appendChild(br.cloneNode())
 	
 	for (item in content){
-		console.log(item, content[item], typeof(content[item]))
+		//console.log(item, content[item], typeof(content[item]))
 		newFormItem = document.createElement('input')
 		newFormItem.setAttribute("type", "text")
 		newFormItem.setAttribute("name", item)
@@ -89,6 +89,6 @@ ipcRenderer.on('notJSON',(err, file, error) => {
 
 
 function displayItem(){
-	console.log("displayItem:" + this.getAttribute("value"))
+	//console.log("displayItem:" + this.getAttribute("value"))
 	ipcRenderer.send("displayItem", this.getAttribute("value"))
 }

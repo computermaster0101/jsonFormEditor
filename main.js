@@ -55,14 +55,14 @@ ipcMain.on('loadFolder', () => { openDialog() })
 ipcMain.on('displayItem', (event,item) => { displayItem(item) })
 
 function openDialog(){
-	console.log("loadFolder hit!")
+	//console.log("loadFolder hit!")
 	mainWindow.webContents.send('clearItems')
 	folderToLoad=(dialog.showOpenDialogSync(mainWindow, { properties: ['openDirectory'] }))
 
 	if ( typeof(folderToLoad) !== 'undefined' && folderToLoad ){
 		expandFolder(folderToLoad)
 	} else {
-		console.log(`folder to load is ${typeof(folderToLoad)}`)
+		//console.log(`folder to load is ${typeof(folderToLoad)}`)
 	}
 }
 
@@ -76,11 +76,11 @@ function expandFolder(folder){
 					noFiles=false
 					mainWindow.webContents.send('addItem', folder, folder)
 				}
-				console.log(`${item} is a json file`)
+				//console.log(`${item} is a json file`)
 				mainWindow.webContents.send('addItem',folder, item)
 			}
 		} else if (stat.isDirectory){
-			console.log(`${item} is a directory`)
+			//console.log(`${item} is a directory`)
 			expandFolder(path.join(`${folder}`, item))
 		}
 	})
@@ -88,21 +88,21 @@ function expandFolder(folder){
 
 function displayItem(item){
 	mainWindow.webContents.send('clearData')
-	console.log("item: " + typeof(item) + item)
+	//console.log("item: " + typeof(item) + item)
 	try {stat = fs.statSync(item).isFile()}
 	catch (e) {stat=false}
 	finally {
 		if (stat){
-			console.log(`${item} is a file`)
+			//console.log(`${item} is a file`)
 			try {
-				console.log(`content: ${JSON.stringify(JSON.parse(fs.readFileSync(item)))}`)
+				//console.log(`content: ${JSON.stringify(JSON.parse(fs.readFileSync(item)))}`)
 				mainWindow.webContents.send("isJSON", item, JSON.parse(fs.readFileSync(item)))
 			}
 			catch (err) {
 				mainWindow.webContents.send("notJSON", item, err)
 			}
 		} else {
-			console.log(`${item} is a directory`)
+			//console.log(`${item} is a directory`)
 			mainWindow.webContents.send('clearItems')
 			expandFolder(item)
 		}
