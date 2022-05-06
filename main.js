@@ -52,8 +52,7 @@ app.on('ready', function(){
 })
 
 ipcMain.on('loadFolder', () => { openDialog() })
-ipcMain.on('displayItem', (event) => { console.log(event) })
-ipcMain.on('hit', (event,myString) => { console.log(myString) })
+ipcMain.on('displayItem', (event,item) => { displayItem(item) })
 
 function openDialog(){
 	console.log("loadFolder hit!")
@@ -75,19 +74,35 @@ function expandFolder(folder){
 			if (item.substr(-5) == ".json"){
 				if (noFiles){
 					noFiles=false
-					mainWindow.webContents.send('addItem',folder)
+					mainWindow.webContents.send('addItem', folder)
 				}
 				console.log(`${item} is a json file`)
-				mainWindow.webContents.send('addItem',path.join(`${folder}`,item))
+				mainWindow.webContents.send('addItem',path.join(`${folder}`, item))
 			}
 		} else if (stat.isDirectory){
 			console.log(`${item} is a directory`)
-			expandFolder(path.join(`${folder}`,item))
+			expandFolder(path.join(`${folder}`, item))
 		}
 	})
 }
 
-
+function displayItem(item){
+	mainWindow.webContents.send('clearData')
+	if (fs.statSync(item).isFile()){
+		console.log(`${item} is a file`)
+		try {
+			console.log(`content: ${JSON.stringify(JSON.parse(fs.readFileSync(item)))}`)
+			mainWindow.webContents.send("isJSON", item, JSON.parse(fs.readFileSync(item)))
+		}
+		catch (err) {
+			mainWindow.webContents.send("notJSON", item, err)
+		}
+	} else {
+		console.log(`${item} is a directory`)
+		mainWindow.webContents.send('clearItems')
+		expandFolder(item)
+	}	
+}
 
 // If OSX, add empty object to menu
 if(process.platform == 'darwin'){
