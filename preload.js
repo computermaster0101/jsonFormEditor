@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
+const path = require('path')
 var listItemCounter = 0
 
 contextBridge.exposeInMainWorld(
@@ -12,6 +13,12 @@ ipcRenderer.on('clearItems',(err) => {
 	const ul = document.querySelector('ul')
 	ul.innerHTML = ""
 	
+//	const li = document.createElement('li')
+//	li.appendChild(document.createTextNode(".."))
+//	li.setAttribute("value", "..")
+//	li.addEventListener("click", displayItem)
+//	ul.appendChild(li)
+	
 	const form = document.querySelector('form')
 	form.innerHTML = ""
 })
@@ -21,13 +28,20 @@ ipcRenderer.on('clearData',(err) => {
 	form.innerHTML = ""
 })
 
-ipcRenderer.on('addItem',(err, item) => {
-	const li = document.createElement('li')
-	const itemText = document.createTextNode(item)
+ipcRenderer.on('addItem',(err, folder, file) => {
 	const ul = document.querySelector('ul')
-
-	li.appendChild(itemText)
-	li.id = "listItem" + listItemCounter++
+	const li = document.createElement('li')
+	
+	console.log("folder: " + folder)
+	console.log("file: " + file)
+	
+	li.appendChild(document.createTextNode(file))
+	if (folder == file) {
+		(value = folder)
+	}else{
+		value = path.join(`${folder}`,`${file}`)
+	}
+	li.setAttribute("value", value)
 	li.addEventListener("click", displayItem)
 	ul.appendChild(li)
 })
@@ -75,6 +89,6 @@ ipcRenderer.on('notJSON',(err, file, error) => {
 
 
 function displayItem(){
-	console.log(this.id + ":" + this.innerHTML)
-	ipcRenderer.send("displayItem", this.innerHTML)
+	console.log("displayItem:" + this.getAttribute("value"))
+	ipcRenderer.send("displayItem", this.getAttribute("value"))
 }

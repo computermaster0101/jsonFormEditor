@@ -74,10 +74,10 @@ function expandFolder(folder){
 			if (item.substr(-5) == ".json"){
 				if (noFiles){
 					noFiles=false
-					mainWindow.webContents.send('addItem', folder)
+					mainWindow.webContents.send('addItem', folder, folder)
 				}
 				console.log(`${item} is a json file`)
-				mainWindow.webContents.send('addItem',path.join(`${folder}`, item))
+				mainWindow.webContents.send('addItem',folder, item)
 			}
 		} else if (stat.isDirectory){
 			console.log(`${item} is a directory`)
@@ -88,20 +88,25 @@ function expandFolder(folder){
 
 function displayItem(item){
 	mainWindow.webContents.send('clearData')
-	if (fs.statSync(item).isFile()){
-		console.log(`${item} is a file`)
-		try {
-			console.log(`content: ${JSON.stringify(JSON.parse(fs.readFileSync(item)))}`)
-			mainWindow.webContents.send("isJSON", item, JSON.parse(fs.readFileSync(item)))
+	console.log("item: " + typeof(item) + item)
+	try {stat = fs.statSync(item).isFile()}
+	catch (e) {stat=false}
+	finally {
+		if (stat){
+			console.log(`${item} is a file`)
+			try {
+				console.log(`content: ${JSON.stringify(JSON.parse(fs.readFileSync(item)))}`)
+				mainWindow.webContents.send("isJSON", item, JSON.parse(fs.readFileSync(item)))
+			}
+			catch (err) {
+				mainWindow.webContents.send("notJSON", item, err)
+			}
+		} else {
+			console.log(`${item} is a directory`)
+			mainWindow.webContents.send('clearItems')
+			expandFolder(item)
 		}
-		catch (err) {
-			mainWindow.webContents.send("notJSON", item, err)
-		}
-	} else {
-		console.log(`${item} is a directory`)
-		mainWindow.webContents.send('clearItems')
-		expandFolder(item)
-	}	
+	}
 }
 
 // If OSX, add empty object to menu
