@@ -37,10 +37,15 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 	
 	const br = document.createElement("br")
 	const form = document.querySelector('form')
+	const fileNameLabel = document.createElement('label')
 	const fileName = document.createElement('input')
+	fileNameLabel.innerHTML = "File Name"
+	fileNameLabel.setAttribute("for", "fileName")
+
 	fileName.setAttribute("type", "text")
-	fileName.setAttribute("name", "File Name: ")
+	fileName.setAttribute("name", "fileName")
 	fileName.setAttribute("placeholder", file)
+	form.appendChild(fileNameLabel)
 	form.appendChild(fileName)
 	form.appendChild(br.cloneNode())
 	
@@ -48,7 +53,7 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 		console.log(item, content[item], typeof(content[item]))
 		newFormItem = document.createElement('input')
 		newFormItem.setAttribute("type", "text")
-		newFormItem.setAttribute("name", "File Name: ")
+		newFormItem.setAttribute("name", item)
 		newFormItem.setAttribute("placeholder", content[item])
 		newFormItemLabel = document.createElement('label')
 		newFormItemLabel.innerHTML = item
