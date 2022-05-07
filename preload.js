@@ -222,8 +222,8 @@ contextBridge.exposeInMainWorld(
 )
 
 ipcRenderer.on('clearItems',(err) => {
-	const ul = document.querySelector('ul')
-	ul.innerHTML = ""
+	const dl = document.querySelector('dl')
+	dl.innerHTML = ""
 	
 //	const li = document.createElement('li')
 //	li.appendChild(document.createTextNode(".."))
@@ -236,26 +236,26 @@ ipcRenderer.on('clearItems',(err) => {
 })
 
 ipcRenderer.on('clearData',(err) => {
-	const ul = document.querySelector('ul')
-	ul.innerHTML = ""
+	const dl = document.querySelector('dl')
+	dl.innerHTML = ""
 })
 
 ipcRenderer.on('addItem',(err, folder, file) => {
-	const ul = document.querySelector('ul')
-	const li = document.createElement('li')
+	const dl = document.querySelector('dl')
+	const dt = document.createElement('dt')
 	
 	//console.log("folder: " + folder)
 	//console.log("file: " + file)
 	
-	li.appendChild(document.createTextNode(file))
-	if (folder == file) {
+	dt.appendChild(document.createTextNode(file))
+	if (folder == file) { //its a folder use dt
 		(value = folder)
 	}else{
-		value = path.join(`${folder}`,`${file}`)
+		value = path.join(`${folder}`,`${file}`) //its a file use dd
 	}
-	li.setAttribute("value", value)
-	li.addEventListener("click", displayItem)
-	ul.appendChild(li)
+	dt.setAttribute("value", value)
+	dt.addEventListener("click", displayItem)
+	dl.appendChild(dt)
 })
 
 ipcRenderer.on('isJSON',(err, file, content) => {
