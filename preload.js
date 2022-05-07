@@ -63,6 +63,7 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 	form.appendChild(fileName)
 	form.appendChild(br.cloneNode())
 	
+	
 	for (item in content){
 		//console.log(item, content[item], typeof(content[item]))
 		newFormItem = document.createElement('input')
@@ -76,8 +77,25 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 		form.appendChild(newFormItemLabel)
 		form.appendChild(newFormItem)
 	}
+	
+	/*
+	template = document.getElementById('fileData')
+	
+	configs = []
+	configs.push(content)
+	configs.forEach(item => {
+		htmlItem = template.cloneNode(true)
+		template.parentElement.appendChild(htmlItem)
+		element = htmlItem.getElementsByTagName('ul')[0]
+		k = katiusha(item , element)
+		k.generateForm()
 
+		katiushas.push(k)
+	})
+	*/
 })
+
+
 
 ipcRenderer.on('notJSON',(err, file, error) => {
 	const form = document.querySelector('form')
@@ -92,3 +110,4 @@ function displayItem(){
 	//console.log("displayItem:" + this.getAttribute("value"))
 	ipcRenderer.send("displayItem", this.getAttribute("value"))
 }
+
