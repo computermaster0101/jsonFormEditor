@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
   <title>JSON Form Viewer</title>
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    ul {
+	  list-style-type: none;
+	  margin-left: 10px;
+	  padding: 0;
+	}
+  </style>
 </head>
 <body onload="loadFolder();">
   <h1>JSON Form Viewer</h1>
-  <div>
-  <div style="float: left;" id="files" align="left"><dl>files</dl></div>
-  <div style="float: right;" align="right">
-  <div id="fileData"><div><ul id="fileDataItem">fileDataItem</ul></div></div>
-  </div>
+  <div style="float: left;" id="files"><dl>files</dl></div>
+  <div style="float: right;" id="fileData"><ul id="fileDataItem">fileDataItem</ul></div>
   <div style="clear:both;" id="search"></div>
-  </div>
   <script>
 	
 	function loadFolder(){
