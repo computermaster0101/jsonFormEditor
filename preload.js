@@ -242,20 +242,23 @@ ipcRenderer.on('clearData',(err) => {
 
 ipcRenderer.on('addItem',(err, folder, file) => {
 	const dl = document.querySelector('dl')
-	const dt = document.createElement('dt')
 	
 	//console.log("folder: " + folder)
 	//console.log("file: " + file)
 	
-	dt.appendChild(document.createTextNode(file))
-	if (folder == file) { //its a folder use dt
-		(value = folder)
+	if (folder == file) { 
+		const dt = document.createElement('dt')
+		dt.appendChild(document.createTextNode(file))
+		dt.setAttribute("value", folder)
+		dt.addEventListener("click", displayItem)
+		dl.appendChild(dt)
 	}else{
-		value = path.join(`${folder}`,`${file}`) //its a file use dd
+		const dd = document.createElement('dd')
+		dd.appendChild(document.createTextNode(" - " + file))
+		dd.setAttribute("value", path.join(`${folder}`,`${file}`))
+		dd.addEventListener("click", displayItem)
+		dl.appendChild(dd)
 	}
-	dt.setAttribute("value", value)
-	dt.addEventListener("click", displayItem)
-	dl.appendChild(dt)
 })
 
 ipcRenderer.on('isJSON',(err, file, content) => {
