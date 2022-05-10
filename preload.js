@@ -185,7 +185,7 @@ var katiusha = (function(obj , el){
 		div.appendChild(label)
 		li = document.createElement('li');
 		li.appendChild(div);
-		console.log(parent)
+		//console.log(parent)
 		parent.appendChild(li);
 		return input
 	};
