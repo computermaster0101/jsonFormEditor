@@ -1,4 +1,4 @@
-var katiusha = (function(obj , el){
+function katiusha(obj , el){
 	
 	//this = this
 	this.myObject = obj;
@@ -209,4 +209,4 @@ var katiusha = (function(obj , el){
 		clear(this.myObject, this.id);
 	}
 	return this
-});
+};
