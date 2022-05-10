@@ -237,7 +237,8 @@ ipcRenderer.on('clearItems',(err) => {
 
 ipcRenderer.on('clearData',(err) => {
 	const dl = document.querySelector('dl')
-	dl.innerHTML = ""
+	const ul = document.querySelector('ul')
+	ul.innerHTML = ""
 })
 
 ipcRenderer.on('addItem',(err, folder, file) => {
