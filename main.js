@@ -103,8 +103,8 @@ function displayItem(item){
 			}
 		} else {
 			//console.log(`${item} is a directory`)
-			mainWindow.webContents.send('clearItems')
-			expandFolder(item)
+			//mainWindow.webContents.send('clearItems')
+			//expandFolder(item)
 		}
 	}
 }
