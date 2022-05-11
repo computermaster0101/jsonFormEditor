@@ -109,11 +109,6 @@ function displayItem(item){
 	}
 }
 
-// If OSX, add empty object to menu
-if(process.platform == 'darwin'){
-	mainMenuTemplate.unshift({});
-}
-
 if(process.env.NODE_ENV !== 'production'){
 	mainMenuTemplate.push({
 		label: 'Developer Tools',
