@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 const path = require('path')
-const { buildFormFromJson } = require('./formBuilder.js')
+const formBuilder = require('./formBuilder.js')
 
 
 var katiusha = (function(obj , el){
@@ -267,7 +267,7 @@ ipcRenderer.on('addItem',(err, folder, file) => {
 
 ipcRenderer.on('isJSON',(err, file, content) => {
 	//console.log(`${file}:${JSON.stringify(content)}`)
-	buildFormFromJson(JSON.stringify(content))
+	formBuilder.getFormFromJSON(JSON.stringify(content))
 	//form = buildFormFromJson(content)
 	/*
 	const br = document.createElement("br")
