@@ -200,12 +200,6 @@ var katiusha = (function(obj , el){
 			this.canGenerate = false
 		}
 	}
-	this.getData = function(){
-		if(this.canReadData){
-			rewind(this.myObject , this.data , this.id)
-		}
-		return this.data;
-	}
 	this.clear = function() {
 		this.element.innerText = ''
 		this.data = {}
@@ -267,7 +261,8 @@ ipcRenderer.on('addItem',(err, folder, file) => {
 
 ipcRenderer.on('isJSON',(err, file, content) => {
 	//console.log(`${file}:${JSON.stringify(content)}`)
-	formBuilder.getFormFromJSON(JSON.stringify(content))
+	console.log(typeof(content))
+	formBuilder.getFormFromJSON(content)
 	//form = buildFormFromJson(content)
 	/*
 	const br = document.createElement("br")
