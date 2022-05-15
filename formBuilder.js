@@ -1,9 +1,9 @@
-exports.getFormFromJSON = (object) => {buildForm(object)}
+exports.getFormFromJSON = (object) => {return buildForm(object)}
 
 const form = document.createElement('form')
 
 function buildForm(object){
-	form.innerHTML = ""
+	form.innerHTML = "myFirstForm"
 	expandObject(object)
 	return form
 }

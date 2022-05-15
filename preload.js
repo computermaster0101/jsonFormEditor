@@ -234,9 +234,8 @@ ipcRenderer.on('clearItems',(err) => {
 })
 
 ipcRenderer.on('clearData',(err) => {
-	const dl = document.querySelector('dl')
-	const ul = document.querySelector('ul')
-	ul.innerHTML = ""
+	const fileDataDiv = document.getElementById('fileData')
+	fileDataDiv.innerHTML = ""
 })
 
 ipcRenderer.on('addItem',(err, folder, file) => {
@@ -262,11 +261,13 @@ ipcRenderer.on('addItem',(err, folder, file) => {
 
 ipcRenderer.on('isJSON',(err, file, content) => {
 	//console.log(`${file}:${JSON.stringify(content)}`)
-	console.log(typeof(content))
-	formBuilder.getFormFromJSON(content)
-	//form = buildFormFromJson(content)
-	/*
 	const br = document.createElement("br")
+	fileDataDiv = document.getElementById("fileData")
+	form = formBuilder.getFormFromJSON(content)
+	fileDataDiv.appendChild(form)
+	
+	
+	/*
 	const form = document.querySelector('form')
 	const fileNameLabel = document.createElement('label')
 	const fileName = document.createElement('input')
