@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 const path = require('path')
 const formBuilder = require('./formBuilder.js')
 
-
+/*
 var katiusha = (function(obj , el){
 	
 	//this = this
@@ -209,6 +209,7 @@ var katiusha = (function(obj , el){
 	}
 	return this
 });
+*/
 
 var listItemCounter = 0
 contextBridge.exposeInMainWorld(
@@ -293,7 +294,6 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 		form.appendChild(newFormItemLabel)
 		form.appendChild(newFormItem)
 	}
-	*/
 	template = document.getElementById('fileDataItem')
 	
 	configs = []
@@ -307,6 +307,7 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 		k.generateForm()
 
 	})
+	*/
 	
 })
 
