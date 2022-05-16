@@ -1,7 +1,6 @@
 exports.getFormFromJSON = (object) => {return buildForm(object)}
 
 const form = document.createElement('form')
-const br = document.createElement("br")
 
 function buildForm(object){
 	form.innerHTML = ""
@@ -34,8 +33,8 @@ function expandObject(object){
 }
 
 function addInputToForm(key,value){
-	form.appendChild(br.cloneNode())
 	console.log(`key: ${key}`, typeof(key),`object: null`)
+	form.appendChild(document.createElement("br"))
 	label = document.createElement('label')
 	input = document.createElement('input')
 	strong = document.createElement('strong')
