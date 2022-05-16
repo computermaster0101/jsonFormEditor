@@ -13,17 +13,23 @@ function expandObject(object){
 	Object.keys(object).forEach(key => {
 		if(object[key] == null ){
 			addInputToForm(key,"null")
-			addTypeListToForm(key,null)
-		} else if(typeof object[key] === 'string') {
-			addInputToForm(key,object[key])
-		} else if(typeof object[key] === 'number'){
-			addInputToForm(key,object[key])
-		} else if(typeof object[key] === 'boolean'){
-			addInputToForm(key,object[key])
-		} else if(typeof object[key] === 'object'){
-			addInputToForm(key,"object")
-			expandObject(object[key])
-		} 
+		} else {
+			switch (typeof(object[key])){
+				case 'string':
+					addInputToForm(key,object[key])
+					break
+				case 'number':
+					addInputToForm(key,object[key])
+					break
+				case 'boolean':
+					addInputToForm(key,object[key])
+					break
+				case 'object':
+					addInputToForm(key,"object")
+					expandObject(object[key])
+					break
+			}
+		}
 	})
 }
 
