@@ -4,7 +4,7 @@ const form = document.createElement('form')
 const br = document.createElement("br")
 
 function buildForm(object){
-	form.innerHTML = "myFirstForm"
+	form.innerHTML = ""
 	expandObject(object)
 	return form
 }
@@ -12,21 +12,22 @@ function buildForm(object){
 function expandObject(object){
 	Object.keys(object).forEach(key => {
 		if(object[key] == null ){
-			addNullToForm(key)
+			addInputToForm(key,"null")
 			addTypeListToForm(key,null)
 		} else if(typeof object[key] === 'string') {
-			addStringToForm(key,object[key])
+			addInputToForm(key,object[key])
 		} else if(typeof object[key] === 'number'){
-			addNumberToForm(key,object[key])
+			addInputToForm(key,object[key])
 		} else if(typeof object[key] === 'boolean'){
-			addBooleanToForm(key,object[key])
+			addInputToForm(key,object[key])
 		} else if(typeof object[key] === 'object'){
-			addObjectToForm(key,object[key])
+			addInputToForm(key,"object")
+			expandObject(object[key])
 		} 
 	})
 }
 
-function addNullToForm(key){
+function addInputToForm(key,value){
 	form.appendChild(br.cloneNode())
 	console.log(`key: ${key}`, typeof(key),`object: null`)
 	label = document.createElement('label')
@@ -40,26 +41,13 @@ function addNullToForm(key){
 		})
 	setAttr(input,{
 		"type": "text",
-		"name": "null",
-		"placeholder": "null",
+		"name": `${key}.${value}`,
+		"placeholder": value,
 		"readonly": "true"
 	})
 	appendElementsToForm([label, input])
 }
 
-function addStringToForm(key,value){
-	console.log(`key: ${key}`, typeof(key),`object: ${value}`, typeof(value))
-}
-function addNumberToForm(key,value){
-	console.log(`key: ${key}`, typeof(key),`object: ${value}`, typeof(value))
-}
-function addBooleanToForm(key,value){
-	console.log(`key: ${key}`, typeof(key),`object: ${value}`, typeof(value))
-}
-function addObjectToForm(key,object){
-	console.log(`key: ${key}`, typeof(key),`object: ${JSON.stringify(object)}`, typeof(object))
-	expandObject(object)
-}
 
 function setAttr(element , attributes){
 	Object.keys(attributes).forEach(key => {
