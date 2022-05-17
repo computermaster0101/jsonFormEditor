@@ -101,10 +101,6 @@ function displayItem(item){
 			catch (err) {
 				mainWindow.webContents.send("notJSON", item, err)
 			}
-		} else {
-			//console.log(`${item} is a directory`)
-			//mainWindow.webContents.send('clearItems')
-			//expandFolder(item)
 		}
 	}
 }
