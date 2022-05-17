@@ -8,43 +8,6 @@ function buildFormFromObject(object){
 	return form
 }
 
-function uuid(){
-	var dt = new Date().getTime();
-	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = (dt + Math.random()*16)%16 | 0;
-		dt = Math.floor(dt/16);
-		return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-	});
-	return uuid;
-}
-	
-function buildListItem(key,value,type){
-	li = document.createElement('li')
-	div = document.createElement('div')
-	label = document.createElement('label')
-	strong = document.createElement('strong')
-	input = document.createElement('input')
-
-	setAttr(strong, {
-		"innerHTML": key
-	})
-	setAttr(label ,{
-		"id": uuid(),
-		"for": `${key}-${value}`
-	})
-	setAttr(input,{
-		"type": type,
-		"name": `${key}-${value}`,
-		"placeholder": value
-	})
-	if((type == "checkbox") && (value)){setAttr(input,{"checked":value})}
-	li.appendChild(div)
-	div.appendChild(label)
-	label.appendChild(strong)
-	div.appendChild(input)
-	return li
-}
-
 function expandObject(object,attachTo){
 	Object.keys(object).forEach(key => {
 		if(object[key] == null ){
@@ -68,7 +31,7 @@ function expandObject(object,attachTo){
 					newli = document.createElement('li')
 					  span = document.createElement('span')
 					    newul = document.createElement('ul')
-					      li = buildListItem(key,JSON.stringify(object[key]),"input")
+					      li = buildListItem(key,object[key],"input")
 						    nestli = document.createElement('li')
 							  nestspan = document.createElement('span')
 								nestul = document.createElement('ul')
@@ -84,6 +47,44 @@ function expandObject(object,attachTo){
 			}
 		}
 	})
+}
+	
+function buildListItem(key,value,type){
+	li = document.createElement('li')
+	  div = document.createElement('div')
+	    label = document.createElement('label')
+	      strong = document.createElement('strong')
+	    input = document.createElement('input')
+
+	setAttr(strong, {
+		"innerHTML": key
+	})
+	setAttr(label ,{
+		"id": uuid(),
+		"for": `${key}-${value}`
+	})
+	setAttr(input,{
+		"type": type,
+		"name": `${key}-${value}`,
+		"placeholder": value
+	})
+	if((type == "checkbox") && (value)){setAttr(input,{"checked":value})}
+	if(typeof(value) == "object"){setAttr(input,{"readonly": "true", "hidden":"true"})}
+	li.appendChild(div)
+	  div.appendChild(label)
+	    label.appendChild(strong)
+	  div.appendChild(input)
+	return li
+}
+
+function uuid(){
+	var dt = new Date().getTime();
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (dt + Math.random()*16)%16 | 0;
+		dt = Math.floor(dt/16);
+		return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+	});
+	return uuid;
 }
 
 function setAttr(element , attributes){
