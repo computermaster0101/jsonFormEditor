@@ -10,9 +10,23 @@ function buildFormFromObject(object){
 
 function expandObject(object,attachTo){
 	Object.keys(object).forEach(key => {
-		if(object[key] == null ){
-			buildListItem(key,object[key],"input")
-			attachTo.appendChild(li)
+		
+		if((typeof(object[key]) == 'object') && (object[key] !== null)){
+			newli = document.createElement('li')
+			  span = document.createElement('span')
+			    newul = document.createElement('ul')
+			      li = buildListItem(key,object[key],"input")
+			        nestli = document.createElement('li')
+			          nestspan = document.createElement('span')
+			            nestul = document.createElement('ul')
+			attachTo.appendChild(newli)
+			  newli.appendChild(span)
+			    span.appendChild(newul)
+			      newul.appendChild(li)
+			        li.appendChild(nestli)
+			          nestli.appendChild(nestspan)
+			            nestspan.appendChild(nestul)
+			expandObject(object[key], nestul)			
 		} else {
 			switch (typeof(object[key])){
 				case 'string':
@@ -28,21 +42,8 @@ function expandObject(object,attachTo){
 					attachTo.appendChild(li)
 					break
 				case 'object':
-					newli = document.createElement('li')
-					  span = document.createElement('span')
-					    newul = document.createElement('ul')
-					      li = buildListItem(key,object[key],"input")
-						    nestli = document.createElement('li')
-							  nestspan = document.createElement('span')
-								nestul = document.createElement('ul')
-					attachTo.appendChild(newli)
-					  newli.appendChild(span)
-					    span.appendChild(newul)
-					      newul.appendChild(li)
-					        li.appendChild(nestli)
-					          nestli.appendChild(nestspan)
-					            nestspan.appendChild(nestul)
-					expandObject(object[key], nestul)
+					buildListItem(key,object[key],"input")
+					attachTo.appendChild(li)
 					break
 			}
 		}
@@ -66,10 +67,10 @@ function buildListItem(key,value,type){
 	setAttr(input,{
 		"type": type,
 		"name": `${key}-${value}`,
-		"placeholder": value
+		"value": value
 	})
-	if((type == "checkbox") && (value)){setAttr(input,{"checked":value})}
-	if(typeof(value) == "object"){setAttr(input,{"readonly": "true", "hidden":"true"})}
+	if((typeof(value) == "boolean") && (value)){setAttr(input,{"checked":value})}
+	if(typeof(value) == "object"){setAttr(input,{"readonly": "true"})}
 	li.appendChild(div)
 	  div.appendChild(label)
 	    label.appendChild(strong)
