@@ -52,10 +52,10 @@ function buildListItem(key,value){
 			break
 		case 'number':
 			type = "number"
-			if(value){setAttr(input,{"checked":value})}
 			break
 		case 'boolean':
 			type = "checkbox"
+			if(value){setAttr(input,{"checked":value})}
 			break
 		case 'object':
 			type = "input"
