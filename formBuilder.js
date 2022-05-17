@@ -25,6 +25,7 @@ function expandObject(object,attachTo){
 			        li.appendChild(nestli)
 			          nestli.appendChild(nestspan)
 			            nestspan.appendChild(nestul)
+			setAttr(span,{"class":"caret"})
 			expandObject(object[key], nestul)			
 		} else {
 			li = buildListItem(key,object[key])
@@ -39,39 +40,46 @@ function buildListItem(key,value){
 	    label = document.createElement('label')
 	      strong = document.createElement('strong')
 	    input = document.createElement('input')
-	setAttr(label ,{
-		"id": uuid(),
-		"for": `${key}-${value}`
-	})
-	setAttr(strong, {
-		"innerHTML": key
-	})
+	li.appendChild(div)
+	label.appendChild(strong)
+	setAttr(label ,{"for": `${key}-${value}`})
+	setAttr(strong, {"innerHTML": key})
 	switch (typeof(value)){
 		case 'string':
 			type = "input"
+			setAttr(div,{"class":"form-group"})
+			setAttr(input,{"class":"form-control"})
+			div.appendChild(label)
+			div.appendChild(input)
 			break
 		case 'number':
 			type = "number"
+			setAttr(div,{"class":"form-group"})
+			setAttr(input,{"class":"form-control"})
+			div.appendChild(label)
+			div.appendChild(input)
 			break
 		case 'boolean':
 			type = "checkbox"
+			setAttr(div,{"class":"form-check"})
+			setAttr(label,{"class":"form-check-label"})
+			setAttr(input,{"class":"form-check-input"})
 			if(value){setAttr(input,{"checked":value})}
+			div.appendChild(input)
+			div.appendChild(label)
 			break
 		case 'object':
 			type = "input"
 			if(value){setAttr(input,{"hidden": "true"})}else{setAttr(input,{"readonly": "true"})}
+			div.appendChild(label)
+			div.appendChild(input)
 			break
 	}
 	setAttr(input,{
-		"id": uuid(),
 		"type": type,
 		"name": `${key}-${value}`,
 		"value": value
 	})
-	li.appendChild(div)
-	  div.appendChild(label)
-	    label.appendChild(strong)
-	  div.appendChild(input)
 	return li
 }
 
