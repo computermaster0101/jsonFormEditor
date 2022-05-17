@@ -8,7 +8,7 @@ function buildFormFromObject(object){
 	return form
 }
 
-function expandObject(object,attachTo){
+function expandObject(object,parent){
 	Object.keys(object).forEach(key => {
 		if((typeof(object[key]) == 'object') && (object[key] !== null)){
 			newli = document.createElement('li')
@@ -18,7 +18,7 @@ function expandObject(object,attachTo){
 			        nestli = document.createElement('li')
 			          nestspan = document.createElement('span')
 			            nestul = document.createElement('ul')
-			attachTo.appendChild(newli)
+			parent.appendChild(newli)
 			  newli.appendChild(span)
 			    span.appendChild(newul)
 			      newul.appendChild(li)
@@ -29,7 +29,7 @@ function expandObject(object,attachTo){
 			expandObject(object[key], nestul)			
 		} else {
 			li = buildListItem(key,object[key])
-			attachTo.appendChild(li)
+			parent.appendChild(li)
 		}
 	})
 }
@@ -65,8 +65,8 @@ function buildListItem(key,value){
 			setAttr(label,{"class":"form-check-label"})
 			setAttr(input,{"class":"form-check-input"})
 			if(value){setAttr(input,{"checked":value})}
-			div.appendChild(input)
 			div.appendChild(label)
+			div.appendChild(input)
 			break
 		case 'object':
 			type = "input"
