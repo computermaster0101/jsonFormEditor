@@ -1,12 +1,10 @@
 exports.getFormFromJSON = (object) => {return buildFormFromObject(object)}
 
 function buildFormFromObject(object){
-	
 	form = document.createElement('form')
 	ul = document.createElement('ul')
 	form.appendChild(ul)
 	expandObject(object, ul)
-	
 	return form
 }
 
@@ -50,28 +48,22 @@ function buildListItem(key,value,type){
 function expandObject(object,attachTo){
 	Object.keys(object).forEach(key => {
 		if(object[key] == null ){
-			
 			buildListItem(key,object[key],"input")
 			attachTo.appendChild(li)
-	
 		} else {
 			switch (typeof(object[key])){
-					
 				case 'string':
 					li = buildListItem(key,object[key],"input")
-					addItemToElement(li,attachTo)
+					attachTo.appendChild(li)
 					break
-					
 				case 'number':
 					li = buildListItem(key,object[key],"number")
-					addItemToElement(li,attachTo)
+					attachTo.appendChild(li)
 					break
-					
 				case 'boolean':
 					li = buildListItem(key,object[key],"checkbox")
-					addItemToElement(li,attachTo)
+					attachTo.appendChild(li)
 					break
-					
 				case 'object':
 					newli = document.createElement('li')
 					  span = document.createElement('span')
@@ -80,7 +72,6 @@ function expandObject(object,attachTo){
 						    nestli = document.createElement('li')
 							  nestspan = document.createElement('span')
 								nestul = document.createElement('ul')
-					
 					attachTo.appendChild(newli)
 					  newli.appendChild(span)
 					    span.appendChild(newul)
@@ -88,22 +79,10 @@ function expandObject(object,attachTo){
 					        li.appendChild(nestli)
 					          nestli.appendChild(nestspan)
 					            nestspan.appendChild(nestul)
-					
 					expandObject(object[key], nestul)
 					break
 			}
 		}
-		
-	})
-}
-
-function addItemToElement(item,element){
-	element.appendChild(item)
-}
-
-function addItemsToElement(items,element){
-	items.forEach(item => {
-		element.appendChild(item)
 	})
 }
 
@@ -116,4 +95,3 @@ function setAttr(element , attributes){
 		}
 	})
 }
-
