@@ -5,7 +5,7 @@ function buildFormFromObject(object){
 	form = document.createElement('form')
 	ul = document.createElement('ul')
 	form.appendChild(ul)
-	expandObject(object)
+	expandObject(object, ul)
 	
 	return form
 }
@@ -47,39 +47,63 @@ function buildListItem(key,value,type){
 	return li
 }
 
-function expandObject(object){
+function expandObject(object,attachTo){
 	Object.keys(object).forEach(key => {
 		if(object[key] == null ){
 			
 			buildListItem(key,object[key],"input")
-			ul.appendChild(li)
+			attachTo.appendChild(li)
 	
 		} else {
 			switch (typeof(object[key])){
-				case 'object':
-					li = buildListItem(key,object[key],"input")
-					ul.appendChild(li)
-					expandObject(object[key])
-					break
 					
 				case 'string':
 					li = buildListItem(key,object[key],"input")
-					ul.appendChild(li)
+					addItemToElement(li,attachTo)
 					break
 					
 				case 'number':
 					li = buildListItem(key,object[key],"number")
-					ul.appendChild(li)
+					addItemToElement(li,attachTo)
 					break
 					
 				case 'boolean':
 					li = buildListItem(key,object[key],"checkbox")
-					ul.appendChild(li)
+					addItemToElement(li,attachTo)
 					break
 					
+				case 'object':
+					newli = document.createElement('li')
+					  span = document.createElement('span')
+					    newul = document.createElement('ul')
+					      li = buildListItem(key,JSON.stringify(object[key]),"input")
+						    nestli = document.createElement('li')
+							  nestspan = document.createElement('span')
+								nestul = document.createElement('ul')
+					
+					attachTo.appendChild(newli)
+					  newli.appendChild(span)
+					    span.appendChild(newul)
+					      newul.appendChild(li)
+					        li.appendChild(nestli)
+					          nestli.appendChild(nestspan)
+					            nestspan.appendChild(nestul)
+					
+					expandObject(object[key], nestul)
+					break
 			}
 		}
 		
+	})
+}
+
+function addItemToElement(item,element){
+	element.appendChild(item)
+}
+
+function addItemsToElement(items,element){
+	items.forEach(item => {
+		element.appendChild(item)
 	})
 }
 
@@ -93,8 +117,3 @@ function setAttr(element , attributes){
 	})
 }
 
-function appendElementsToForm(elements){
-	elements.forEach(element => {
-		form.appendChild(element)
-	})
-}
