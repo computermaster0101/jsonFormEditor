@@ -59,7 +59,7 @@ function buildListItem(key,value){
 			break
 		case 'object':
 			type = "input"
-			setAttr(input,{"readonly": "true"})
+			if(value){setAttr(input,{"hidden": "true"})}else{setAttr(input,{"readonly": "true"})}
 			break
 	}
 	setAttr(input,{
