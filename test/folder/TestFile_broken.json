@@ -1,0 +1,21 @@
+{
+	"string": "this is a test string",
+	"number": 7,
+	"boolean": true, 
+	"object": {
+		"nestOne": {
+			"n1": "nested",
+			"n2": "object",
+			"n3": "test"
+		}
+		"nestTwo": {
+			"n1": 1,
+			"n2": 2,
+			"n3": 3
+		},
+		"nestThree": {
+			"n1": true,
+			"n2": false
+		}
+	"array": ["this", "is", "a", "test", "array"]
+}

@@ -52,10 +52,11 @@ ipcRenderer.on('isJSON',(err, file, content) => {
 
 
 ipcRenderer.on('notJSON',(err, file, error) => {
-	const form = document.querySelector('form')
-	const header = form.createElement('h3')
-	header.appentChile(file)
-	form.appendChild(header)
+	fileDataDiv = document.getElementById("fileData")
+	console.log(file, typeof(file))
+	form = document.createElement('form')
+	form.innerHTML = `<br><strong>file:</strong> ${file} <br><strong>error:</strong> ${error}`
+	fileDataDiv.appendChild(form)
 
 })
 
